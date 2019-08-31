@@ -14,7 +14,8 @@
         <activity
             android:name=".FullscreenVideoActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".VideoListActivity" />
         <activity android:name=".VideoActivity" />
         <activity android:name=".DashboardActivity" />
