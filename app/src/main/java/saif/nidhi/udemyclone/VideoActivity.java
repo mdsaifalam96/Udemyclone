@@ -5,32 +5,43 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
+import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.PlaybackParameters;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
 @SuppressWarnings("FieldCanBeLocal")
-public class VideoActivity extends AppCompatActivity {
+public class VideoActivity extends AppCompatActivity implements ExoPlayer.EventListener {
 
     // Widgets
     private PlayerView playerView;
     private SimpleExoPlayer player;
+    private Button mFullscreen;
 
     // Variables
     private boolean playWhenReady = true;
     private long playbackPosition;
     private int currentWindow;
     private String videoURL;
+    private ProgressBar progressBarVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +49,22 @@ public class VideoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_video);
 
         getDataOverIntent();
+        mFullscreen = findViewById(R.id.btnFullscreen);
+
+        if (videoURL.isEmpty()) {
+            mFullscreen.setEnabled(false);
+        } else {
+            mFullscreen.setEnabled(true);
+            mFullscreen.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(VideoActivity.this, FullscreenVideoActivity.class);
+                    intent.putExtra("videoURL", videoURL);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+        }
     }
 
     @Override
@@ -93,6 +120,9 @@ public class VideoActivity extends AppCompatActivity {
     }
 
     private void getDataOverIntent() {
+        progressBarVideo = findViewById(R.id.progressBarVideo);
+        progressBarVideo.setVisibility(View.VISIBLE);
+
         Intent intent = getIntent();
         if (intent != null) {
             videoURL = intent.getExtras().getString("downloadURL");
@@ -116,11 +146,119 @@ public class VideoActivity extends AppCompatActivity {
         Uri uri = Uri.parse(videoURL);
         MediaSource mediaSource = buildMediaSource(uri);
         player.prepare(mediaSource, true, false);
+
+        player.addListener(new Player.EventListener() {
+            @Override
+            public void onTimelineChanged(Timeline timeline, Object manifest, int reason) {
+
+            }
+
+            @Override
+            public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
+
+            }
+
+            @Override
+            public void onLoadingChanged(boolean isLoading) {
+
+            }
+
+            @Override
+            public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+                if (playWhenReady && playbackState == Player.STATE_BUFFERING) {
+                    progressBarVideo.setVisibility(View.VISIBLE);
+                }
+                if (playbackState == Player.STATE_READY) {
+                    progressBarVideo.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onRepeatModeChanged(int repeatMode) {
+
+            }
+
+            @Override
+            public void onShuffleModeEnabledChanged(boolean shuffleModeEnabled) {
+
+            }
+
+            @Override
+            public void onPlayerError(ExoPlaybackException error) {
+
+            }
+
+            @Override
+            public void onPositionDiscontinuity(int reason) {
+
+            }
+
+            @Override
+            public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
+
+            }
+
+            @Override
+            public void onSeekProcessed() {
+
+            }
+        });
+
     }
 
     private MediaSource buildMediaSource(Uri uri) {
         return new ExtractorMediaSource.Factory(
                 new DefaultHttpDataSourceFactory("exoplayer-codelab"))
                 .createMediaSource(uri);
+    }
+
+    @Override
+    public void onTimelineChanged(Timeline timeline, Object manifest, int reason) {
+
+    }
+
+    @Override
+    public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
+
+    }
+
+    @Override
+    public void onLoadingChanged(boolean isLoading) {
+
+    }
+
+    @Override
+    public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+
+    }
+
+    @Override
+    public void onRepeatModeChanged(int repeatMode) {
+
+    }
+
+    @Override
+    public void onShuffleModeEnabledChanged(boolean shuffleModeEnabled) {
+
+    }
+
+    @Override
+    public void onPlayerError(ExoPlaybackException error) {
+
+    }
+
+    @Override
+    public void onPositionDiscontinuity(int reason) {
+
+    }
+
+    @Override
+    public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
+
+    }
+
+    @Override
+    public void onSeekProcessed() {
+
     }
 }
