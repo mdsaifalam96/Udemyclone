@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "913366358597-udgofv4sdoe5ve37j374loq1el962l69.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "saif.nidhi.udemyclone",
+            "certificate_hash": "6889a2ae7936763dd38115720745e84566e93b25"
+          }
+        },
+        {
           "client_id": "913366358597-si1gslpedh64d0nur5nlmpt2q6hk17gi.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
