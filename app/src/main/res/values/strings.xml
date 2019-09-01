@@ -9,6 +9,7 @@
     <string name="logout">Logout</string>
 
     <!-- Course Names -->
+    <string name="android_tutrial">Android Tutorial For Beginners</string>
     <string name="oo_js">Object Oriented JavaScript</string>
     <string name="html_css">HTML &amp; CSS Basics</string>
     <string name="git_github">Git &amp; GitHub for Beginners</string>
@@ -16,6 +17,7 @@
     <!-- Course Author Names -->
     <string name="net_ninja">The Net Ninja</string>
     <string name="academind">Academind</string>
+    <string name="mitch_tabian">Mitch Tabian</string>
 
     <!-- Course Difficulty -->
     <string name="beginner">Beginner</string>
@@ -28,5 +30,6 @@
     <string name="dbnode_courses_git">git_github</string>
     <string name="dbnode_courses_html">html_css</string>
     <string name="dbnode_courses_js">oo_js</string>
+    <string name="dbnode_courses_and">and_basics</string>
     <string name="dbnode_videos">videos</string>
 </resources>
